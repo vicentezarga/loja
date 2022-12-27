@@ -19,7 +19,9 @@ public class ProdutoDAO implements IProdutoDAO {
 	@Override
 	public void salvar(Produto pProduto) {
 		tx = em.getTransaction();
-		tx.begin();
+		if(!tx.isActive()) {
+			tx.begin();
+		}
 		em.persist(pProduto);
 	}
 
