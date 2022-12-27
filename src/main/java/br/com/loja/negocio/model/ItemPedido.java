@@ -31,7 +31,7 @@ public class ItemPedido {
 	private Produto produto;
 
 	public ItemPedido(int quantidade, Pedido pedido, Produto produto) {
-		
+
 		this.quantidade = quantidade;
 		this.pedido = pedido;
 		this.produto = produto;
@@ -74,4 +74,9 @@ public class ItemPedido {
 		this.produto = produto;
 	}
 
+	public BigDecimal getValor() {
+		
+		return vlUnitario.multiply(new BigDecimal(quantidade));
+		
+	}
 }

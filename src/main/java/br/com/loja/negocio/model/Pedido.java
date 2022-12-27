@@ -24,7 +24,7 @@ public class Pedido {
 	private long id;
 
 	@Column(name = "vl_total")
-	private BigDecimal vlTotal;
+	private BigDecimal vlTotal = BigDecimal.ZERO;
 
 	@Column(name = "dt_pedido", updatable = false, insertable = true, nullable = false)
 	private LocalDate dataPedido = LocalDate.now();
@@ -74,11 +74,6 @@ public class Pedido {
 		item.setPedido(this);
 		this.itens.add(item);
 		
-		if(vlTotal== null) {
-			vlTotal = new BigDecimal("0");
-			vlTotal = vlTotal.add(item.getVlUnitario());
-		}else {
-			vlTotal = vlTotal.add(item.getVlUnitario());
-		}
+		vlTotal = vlTotal.add(item.getValor());
 	}
 }
