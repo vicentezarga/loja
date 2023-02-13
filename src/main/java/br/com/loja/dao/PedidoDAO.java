@@ -53,6 +53,11 @@ public class PedidoDAO implements IPedidoDAO {
 		return em.createQuery(jpql, PeditoDTO.class).getResultList();
 		
 	}
-	
+	//Carregamento Planejado
+	public Pedido burcarClienteId(Long id){
+		
+		return em.createQuery("SELECT p FROM Pedido p Join fetch p.cliente WHERE p.id = :id", Pedido.class)
+			   .setParameter("id", id).getSingleResult();
+	}
 
 }

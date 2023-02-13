@@ -33,7 +33,7 @@ public class Categoria {
 	}
 
 	public Categoria() {
-
+		
 	}
 
 	public long getId() {

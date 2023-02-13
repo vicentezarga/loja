@@ -2,14 +2,13 @@ package br.com.loja.negocio.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity(name = "produtos")
 public class Produto {
@@ -26,7 +25,7 @@ public class Produto {
 
 	private LocalDateTime dataCadastro = LocalDateTime.now();
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Categoria categoria;
 	
 	public Produto(String nome, String descricao, BigDecimal preco, Categoria categoria) {

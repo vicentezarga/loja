@@ -13,4 +13,6 @@ public interface IPedidoDAO {
 	public BigDecimal getValorTotalPedidos();
 	
 	public List<PeditoDTO> getRelatorioVendas();
+	
+	public Pedido burcarClienteId(Long id);
 }
