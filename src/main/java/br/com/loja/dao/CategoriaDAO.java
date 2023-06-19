@@ -15,7 +15,11 @@ public class CategoriaDAO {
 
 	public void cadastrar(Categoria categoria) {
 		EntityTransaction tx = em.getTransaction();
-		tx.begin();
+		
+		if(!tx.isActive()) {
+			tx.begin();
+		}
+		
 		em.persist(categoria);
 	}
 

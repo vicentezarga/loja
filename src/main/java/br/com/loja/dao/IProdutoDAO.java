@@ -1,5 +1,7 @@
 package br.com.loja.dao;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import br.com.loja.negocio.model.Produto;
@@ -19,5 +21,7 @@ public interface IProdutoDAO {
 	public List<Produto> buscarProdutoNome(String pNome);
 	
 	public List<Produto> buscarProdutoNomeCategoria(String pNomeCategoria);
+	
+	public List<Produto> buscarProdutosCriteria(String nome, BigDecimal preco, LocalDateTime dataCadastro);
 
 }

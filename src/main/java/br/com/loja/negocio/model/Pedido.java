@@ -7,11 +7,9 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,9 +18,8 @@ import javax.persistence.Table;
 @Table(name = "TB_PEDIDO")
 public class Pedido {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@EmbeddedId
+	private PedidoPK id;
 
 	@Column(name = "vl_total")
 	private BigDecimal vlTotal = BigDecimal.ZERO;
@@ -47,12 +44,20 @@ public class Pedido {
 		super();
 	}
 
-	public long getId() {
+	public PedidoPK getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(PedidoPK id) {
 		this.id = id;
+	}
+
+	public List<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 	public BigDecimal getVlTotal() {

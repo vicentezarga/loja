@@ -2,7 +2,7 @@ package br.com.loja.negocio.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,14 +17,10 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
-	@Column(name = "CPF", nullable = false, unique = true, 
-			length = 11, insertable = true, updatable = false)
-	private String cpf;
 
-	@Column(name = "nome", nullable = false, length = 255)
-	private String nome;
-	
+	@Embedded
+	private DadosPessoais dadospessoais;
+
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> colecaoPedido;
 
@@ -32,27 +28,18 @@ public class Cliente {
 		super();
 	}
 
-	public Cliente(String cpf, String nome) {
+	public Cliente(DadosPessoais pessoais) {
 		super();
-		
-		this.cpf = cpf;
-		this.nome = nome;
+		this.dadospessoais = pessoais;
+
 	}
 
-	public String getCpf() {
-		return cpf;
+	public DadosPessoais getDadospessoais() {
+		return dadospessoais;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setDadospessoais(DadosPessoais dadospessoais) {
+		this.dadospessoais = dadospessoais;
 	}
 
 	public List<Pedido> getColecaoPedido() {

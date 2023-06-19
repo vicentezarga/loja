@@ -1,9 +1,16 @@
 package br.com.loja.dao;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import br.com.loja.negocio.model.Produto;
 
@@ -19,7 +26,7 @@ public class ProdutoDAO implements IProdutoDAO {
 	@Override
 	public void salvar(Produto pProduto) {
 		tx = em.getTransaction();
-		if(!tx.isActive()) {
+		if (!tx.isActive()) {
 			tx.begin();
 		}
 		em.persist(pProduto);
@@ -64,20 +71,42 @@ public class ProdutoDAO implements IProdutoDAO {
 
 		return em.createQuery(jpql, Produto.class).getResultList();
 	}
-	
-	public List<Produto> buscarProdutoNome(String pNome){
-		
+
+	public List<Produto> buscarProdutoNome(String pNome) {
+
 		String jpql = "Select p from produtos p where p.nome = :nome";
-		
-		return  em.createQuery(jpql, Produto.class).setParameter("nome", pNome).getResultList();
-		
+
+		return em.createQuery(jpql, Produto.class).setParameter("nome", pNome).getResultList();
+
 	}
-	
-	public List<Produto> buscarProdutoNomeCategoria(String pNomeCategoria){
-		
+
+	public List<Produto> buscarProdutoNomeCategoria(String pNomeCategoria) {
+
 		String jpql = "Select p from produtos p where p.categoria.nome = :nome";
-		
+
 		return em.createQuery(jpql, Produto.class).setParameter("nome", pNomeCategoria).getResultList();
 	}
-	
+
+	public List<Produto> buscarProdutosCriteria(String nome, BigDecimal preco, LocalDateTime dataCadastro) {
+		
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Produto> query = builder.createQuery(Produto.class);
+		Root<Produto>from = query.from(Produto.class);
+		
+		Predicate filtros = builder.and();
+		
+		if(nome!=null && !nome.trim().isEmpty()) {
+			filtros = builder.and(filtros,builder.equal(from.get("nome"), nome));
+		}
+		if(preco!=null) {
+			filtros = builder.and(filtros,builder.equal(from.get("preco"), preco));
+		}
+		if(dataCadastro!=null) {
+			filtros = builder.and(filtros,builder.equal(from.get("dataCadastro"), dataCadastro));
+		}
+		query.where(filtros);
+		
+		return em.createQuery(query).getResultList();
+		
+	}
 }

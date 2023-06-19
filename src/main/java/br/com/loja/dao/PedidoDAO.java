@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import br.com.loja.negocio.model.Pedido;
+import br.com.loja.negocio.model.PedidoPK;
 import br.com.loja.negocio.model.dto.PeditoDTO;
 
 public class PedidoDAO implements IPedidoDAO {
@@ -54,7 +55,7 @@ public class PedidoDAO implements IPedidoDAO {
 		
 	}
 	//Carregamento Planejado
-	public Pedido burcarClienteId(Long id){
+	public Pedido burcarClienteId(PedidoPK id){
 		
 		return em.createQuery("SELECT p FROM Pedido p Join fetch p.cliente WHERE p.id = :id", Pedido.class)
 			   .setParameter("id", id).getSingleResult();

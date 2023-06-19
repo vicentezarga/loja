@@ -1,6 +1,9 @@
 package br.com.loja.negocio.controler;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -112,7 +115,24 @@ public class ControlerProduto implements IControlerProduto {
 		}
 		return colecao;
 	}
+	
+	@Override
+	public List<Produto> buscarProdutosCriteria(String nome, BigDecimal preco, LocalDateTime dataCadastro) {
+		
+		List<Produto> colecao = null;
+		
+		try (JPAUtil jp = new JPAUtil()) {
 
+			em = jp.getConectar();
+			daoProduto = new ProdutoDAO(em);
+			colecao = daoProduto.buscarProdutosCriteria(nome, preco, dataCadastro);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return colecao;
+	}
+	
 	public List<Produto> buscarProdutoNomeCategoria(String pNomeCategoria) {
 
 		List<Produto> colecao = null;

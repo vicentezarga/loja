@@ -9,12 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity(name = "categorias")
 public class Categoria {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "coseqCategoria", 
+		allocationSize = 10, initialValue = 1, sequenceName = "seq_" + "categoria")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coseqCategoria")
 	private long id;
 
 	private String nome;
@@ -31,7 +34,11 @@ public class Categoria {
 		this.status = status;
 		this.colecaoProdutos = pcolecaoProdutos;
 	}
-
+	
+	public Categoria(String nome) {
+		this.nome = nome;
+	}
+	
 	public Categoria() {
 		
 	}
